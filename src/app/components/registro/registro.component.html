@@ -1,0 +1,23 @@
+<form #registroForm= "ngForm" (ngSubmit)=" registrar()">
+  <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="user.nombre" class="form-control" id="nombre" placeholder="Enter nombre">
+  </div>
+  <div class="form-group">
+    <label for="apellido">Apellido:</label>
+    <input type="text" name="apellido" #apellido="ngModel" [(ngModel)]="user.apellido" class="form-control" id="apellido" placeholder="Enter apellido">
+  </div>
+  <div class="form-group">
+    <label for="nick">Nick:</label>
+    <input type="text" name="nick" #nick="ngModel" [(ngModel)]="user.nick" class="form-control" id="nick" placeholder="Enter nick">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address:</label>
+    <input type="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control" id="email" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control" id="password" placeholder="Enter password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,247 @@
+<!-- Cuerpo -->
+<h1 style="text-align: center;">Contactos</h1>
+<div class="container">
+  <br>
+
+
+  
+  <div  style="text-align: center;" class="col" >
+      <button type="button" class="btn btn-success"   data-toggle="modal" data-target="#modalAddContacto">
+          Agregar Contacto 
+        </button>
+  </div>
+  
+  
+
+    <div class="row">
+      
+    
+    
+    <div class="row">
+      <div class="col"*ngFor="let enc of contactos">
+        <br>
+        <div class="card" style="width: 18rem;">
+            
+            <div id="div1" class="card-body">
+                <img src="{{ url +'obtener-imagen-contacto/' + enc.image}}" class="rounded-circle" width="200" height="200" *ngIf="enc.image">
+                <img src="http://assets.stickpng.com/thumbs/585e4beacb11b227491c3399.png" class="rounded-circle" width="200" height="200" *ngIf="!enc.image">
+                <table  class="table"> 
+                    <thead class="thead-dark">
+                      <tr >
+                        <th style="max-width: 50px;" scope="col">Datos</th>
+                        <th style="max-width: 50px;" scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="max-width: 50px;">Nombre</td>
+                        <td style="max-width: 50px;">{{enc.nombre}}</td>
+                      </tr>
+                      <tr>
+                        <td style="max-width: 50px;">Apellido</td>
+                        <td style="max-width: 50px;">{{enc.apellido}}</td>
+                      </tr>
+                      <tr>
+                        <td style="max-width: 50px;">Apodo</td>
+                        <td style="max-width: 50px;">{{enc.apodo}}</td>
+                      </tr>
+                      <tr >
+                          <td style="max-width: 50px;">Correo</td>
+                          <td style="max-width: 50px;">{{enc.correo}}</td>
+                      </tr>
+                      <tr>
+                        <td style="max-width: 50px;">Direccion</td>
+                        <td style="max-width: 50px;">{{enc.direccion}}</td>
+                      </tr>
+                      <tr>
+                        <td style="max-width: 50px;">Telefono</td>
+                        <td style="max-width: 50px;">{{enc.telefono}}</td>
+                      </tr>
+                      <tr>
+                        <td style="max-width: 50px;">Codigo us</td>
+                        <td style="max-width: 50px;">{{enc.usuario._id}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+            
+            <div class="btn-group" role="group" aria-label="botones-card">
+                <button type="button" class="btn btn-primary btn-lg-btn-block" data-toggle="modal" data-target="#modalEditarContactos" (click)="getContacto(enc._id)">
+                    Editar
+                  </button>
+                  <button type="button" class="btn btn-primary btn-lg-btn-block" data-toggle="modal" data-target="#modalEliminarContac" (click)="eliminarContacto(enc._id)">
+                      Eliminar X
+                    </button>
+                    
+                    <button type="button" class="btn btn-primary btn-lg-btn-block" data-toggle="modal" data-target="#modalCorreo" (click)="getContacto(enc._id)">
+                        Enviar Correo
+                      </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="modalCorreo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <!-- ver form -->
+          <form (ngSubmit)="contactForm(form.value)" #form="ngForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Correos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                  <label>Nombre</label>
+                    <input type="text" class="form-control" name="nombre"  ngModel  >
+                    </div>
+                    <div class="form-group">
+                        <label>Asunto</label>
+                        <input type="text" class="form-control" name="asunto" ngModel>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" readonly name="email" [(ngModel)]="modelContactos.correo" >
+                            </div>
+                            <div class="form-group">
+                                <label>Mensaje</label>
+                                <textarea class="form-control" cols="30" rows="6" name="mensaje" ngModel></textarea>
+                                </div>
+      
+                          
+               
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar X</button>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+
+
+  <div class="modal fade" id="modalAddContacto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <form #FormAddContacto = "ngForm" (ngSubmit)="addContacto()">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Contactos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="nombre" >Nombre</label>
+              <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="modelContactos.nombre" class="form-control" id="nombre"  placeholder="Enter Nombre">
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" name="apellido" #apellido="ngModel" [(ngModel)]="modelContactos.apellido" class="form-control" id="apellido" placeholder="apellido">
+            </div>
+            <div class="form-group">
+                <label for="apodo">Apodo</label>
+                <input type="text" name="apodo" #apodo="ngModel" [(ngModel)]="modelContactos.apodo" class="form-control" id="apodo" placeholder="apodo">
+              </div>
+            <div class="form-group">
+                <label for="correo">Correo</label>
+                <input type="text" name="correo" #correo="ngModel" [(ngModel)]="modelContactos.correo" class="form-control" id="correo" placeholder="correo">
+            </div>
+            <div class="form-group">
+                <label for="direccion">Direccion</label>
+                <input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="modelContactos.direccion" class="form-control" id="direccion" placeholder="direccion">
+            </div>
+            <div class="form-group">
+                <label for="telefono">Telefono</label>
+                <input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="modelContactos.telefono" class="form-control" id="telefono" placeholder="telefono">
+            </div>
+               
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar X</button>
+            <button type="submit" class="btn btn-primary">Guardar +</button>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+
+
+    <!-- //ModalVer Opiniones -->
+    <!-- Modal -->
+  <div class="modal fade" id="modalEditarContactos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <div class="container">
+                <div class="row justify-content-md-center">
+                  <div class="col">
+                      <form #editContactoForm= "ngForm" (ngSubmit)="editContacto()">
+                          <div class="form-group">
+                            <label for="nombre">Nombre:</label>
+                            <input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="modelContactos.nombre" class="form-control" id="nombre" placeholder="Enter nombre">
+                          </div>
+                          <div class="form-group">
+                            <label for="apellido">Apellido:</label>
+                            <input type="text" name="apellido" #apellido="ngModel" [(ngModel)]="modelContactos.apellido" class="form-control" id="apellido" placeholder="Enter apellido">
+                          </div>
+                          <div class="form-group">
+                            <label for="apodo">Apodo:</label>
+                            <input type="text" name="apodo" #apodo="ngModel" [(ngModel)]="modelContactos.apodo" class="form-control" id="apodo" placeholder="Enter nick">
+                          </div>
+                          <div class="form-group">
+                            <label for="correo">Correo:</label>
+                            <input type="email" name="correo" #correo="ngModel" [(ngModel)]="modelContactos.correo" class="form-control" id="correo" placeholder="Enter email">
+                          </div>
+                          <div class="form-group">
+                            <label for="direccion">Direccion:</label>
+                            <input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="modelContactos.direccion" class="form-control" id="direccion" placeholder="Enter direccion">
+                          </div>
+                          <div class="form-group">
+                            <label for="telefono">teléfono:</label>
+                            <input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="modelContactos.telefono" class="form-control" id="telefono" placeholder="Enter telefono">
+                          </div>
+                          
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                              </div>
+                              <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="fileChangeEvent($event)">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                              </div>
+                            </div>
+                         
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                  </div>
+                </div>
+              </div>
+
+
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- <div class="modal-body">
+            <ul class="list-group">
+              <li class="list-group-item">si:{{modelEncuestas.opinion.si}}</li>
+              <li class="list-group-item">no:{{modelEncuestas.opinion.no}}</li>
+              <li class="list-group-item">Tal vez:{{modelEncuestas.opinion.talvez}}</li>
+              
+            </ul>
+          </div> -->
+          
+        </div>
+      </div>
+    </div>
